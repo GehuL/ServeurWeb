@@ -1,0 +1,86 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0px;
+    background-color: rgb(179, 179, 179);
+}
+
+.entete {
+    background-color: #eee;
+    box-shadow: 0 0 10px #000;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1;
+}
+
+.bodydy
+{
+    width: 80%;
+    margin:auto;
+    background-color: #ffffff;
+}
+
+.logo {
+    width: 200px;
+    padding: 10px;
+}
+
+.liens {
+    padding: 20px;
+    vertical-align: middle;
+}
+
+h1 {
+    margin-top: 0px;
+    padding: 10px;
+    border-bottom: 1px;
+    color: #4691ff;
+}
+
+p {
+    text-align: justify;
+}
+
+strong {
+    color: #4691ff;
+}
+
+.video
+{
+    display: block;
+    margin: auto;
+    width: 500px;
+}
+
+.actus {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.actutus
+{
+    text-align: center;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+img {
+    width: 200px;
+}
+
+.actus_image{
+    border-radius:10px;
+    size: 0.7em;
+}
+
+.pied {
+    background-color: rgb(107, 107, 107);
+    text-align: center;
+}
+
+.actutus b
+{
+    color: #555;
+    margin-bottom: 10px;
+}
