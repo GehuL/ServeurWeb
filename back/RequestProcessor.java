@@ -1,3 +1,5 @@
+package back;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
@@ -5,8 +7,8 @@ import java.net.Socket;
 class RequestProcessor implements Runnable
 {
 	private HttpContext context;
-	
-	private static final String rootPath = "../frontend/";
+
+	private static final String rootPath = "front/";
 
 	public RequestProcessor(Socket socket)
 	{
@@ -22,42 +24,42 @@ class RequestProcessor implements Runnable
 			System.out.println(context.getIP() + ">" + request);
 
 			HttpResponse.Builder responseBuilder = null;
-		
+
 			try
-			{				
+			{
 				responseBuilder = this.context.getResponse(200, "OK");
-				
+
 				String ext = getExtension(request.getUrl());
-				if(ext.length() != 0) // Il y a un fichier
+				if (ext.length() != 0) // Il y a un fichier
 				{
 					File file = new File(rootPath + request.getUrl());
-					if(!file.canRead())
+					if (!file.canRead())
 					{
 						responseBuilder = this.context.getResponse(404, "Not Found");
 						responseBuilder.setContent("<strong>RESSOURCE NOT FOUND</strong>").addField("Content-Type", "text/html");
-				
-					}else
+
+					} else
 					{
-					String mime = getMIME(ext);
-					responseBuilder.addField("Content-Type", mime);
-					responseBuilder.addField("Content-Length", String.valueOf(file.length()));
-					responseBuilder.setContent(file);				
+						String mime = getMIME(ext);
+						responseBuilder.addField("Content-Type", mime);
+						responseBuilder.addField("Connection", "Keep-Alive");
+						responseBuilder.addField("Content-Length", String.valueOf(file.length()));
+						responseBuilder.setContent(file);
 					}
-					}
+				}
 
 			} catch (IOException e)
 			{
 				responseBuilder = this.context.getResponse(404, "Not Found");
 				responseBuilder.setContent("<strong>RESSOURCE NOT FOUND</strong>").addField("Content-Type", "text/html");
-			}				
-			
-			if(responseBuilder != null)
+			}
+
+			if (responseBuilder != null)
 			{
-				HttpResponse response = responseBuilder.build();	
+				HttpResponse response = responseBuilder.build();
 				System.out.println(context.getIP() + "<" + response);
 				response.send();
 			}
-		
 
 		} catch (IllegalArgumentException e)
 		{
@@ -76,16 +78,16 @@ class RequestProcessor implements Runnable
 			}
 		}
 	}
-	
+
 	private static String getExtension(String url)
 	{
 		String extension = url.substring(url.lastIndexOf(".") + 1);
 		return extension;
 	}
-	
+
 	private String getMIME(String extension)
 	{
-		switch(extension)
+		switch (extension)
 		{
 		case "png":
 			return "image/png";

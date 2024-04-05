@@ -1,9 +1,9 @@
-import java.io.BufferedWriter;
+package back;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -30,14 +30,14 @@ class HttpResponse
 		if(file != null && file.canRead())
 		{
 			FileInputStream input = new FileInputStream(this.file);
-			this.output.write(input.readAllBytes());
+			input.transferTo(output);
 			input.close();
 		}else if(this.content != null)
 		{
 			this.output.write(content);
 			
 		}
-		
+		this.output.write("\r\n".getBytes());
 		this.output.flush();
 	}
 
@@ -91,15 +91,15 @@ class HttpResponse
 			response.header = this.header;
 
 			for (String field : fields)
-				response.header += field + "\n";
+				response.header += field + "\r\n";
 
 			if (this.content != null)
 			{
-				response.header += "\n";
+				response.header += "\r\n";
 				response.content = this.content.getBytes();
 			}else if(this.fileContent != null)
 			{
-				response.header += "\n";
+				response.header += "\r\n";
 				response.file = this.fileContent;
 			}
 

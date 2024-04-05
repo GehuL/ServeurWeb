@@ -1,3 +1,5 @@
+package back;
+
 import java.io.IOException;
 import java.net.Socket;
 
@@ -27,7 +29,7 @@ public class HttpContext
 	
 	public HttpResponse.Builder getResponse(int code, String message) throws IOException
 	{
-		return new HttpResponse.Builder(200, "OK", getClient());
+		return new HttpResponse.Builder(code, message, getClient());
 	}
 	
 	public void close() throws IOException
